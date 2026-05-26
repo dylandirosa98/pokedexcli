@@ -51,18 +51,3 @@ type cliCommand struct {
 	description string
 	callback    func() error
 }
-
-func exit() error {
-	print("Closing the Pokedex... Goodbye!\n")
-	os.Exit(0)
-	return fmt.Errorf("exiting the program")
-}
-
-func help() error {
-	fmt.Printf("Welcome to the Pokedex!\nUsage:\n\n")
-	commands := getCommands()
-	for _, i := range commands {
-		fmt.Printf("%s: %s\n", i.name, i.description)
-	}
-	return fmt.Errorf("you have been helped")
-}
