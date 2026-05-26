@@ -25,12 +25,26 @@ func getCommands() map[string]cliCommand {
 			description: "Displays help mesage",
 			callback:    help,
 		},
+		"map": {
+			name:        "map",
+			description: "displays location areas",
+			callback:    mapCommand,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "displays previous location areas",
+			callback:    mapb,
+		},
 	}
 }
 
 func startRepl() {
 	scanner := bufio.NewScanner(os.Stdin)
 	commands := getCommands()
+	con := config{
+		nextURL:     nil,
+		previousURL: nil,
+	}
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
@@ -41,7 +55,7 @@ func startRepl() {
 		if commands[text[0]].name == "" {
 			print("Unknown command")
 		} else {
-			commands[text[0]].callback()
+			commands[text[0]].callback(&con)
 		}
 	}
 }
@@ -49,5 +63,10 @@ func startRepl() {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
+}
+
+type config struct {
+	nextURL     *string
+	previousURL *string
 }
