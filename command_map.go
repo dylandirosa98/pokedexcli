@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func mapCommand(fig *config) error {
+func mapCommand(fig *config, arg ...string) error {
 	link := "https://pokeapi.co/api/v2/location-area"
 	if fig.nextURL != nil {
 		link = *fig.nextURL
@@ -59,7 +59,7 @@ type Data struct {
 	} `json:"results"`
 }
 
-func mapb(fig *config) error {
+func mapb(fig *config, arg ...string) error {
 	link := "https://pokeapi.co/api/v2/location-area"
 	if fig.previousURL != nil {
 		link = *fig.previousURL

@@ -38,6 +38,11 @@ func getCommands() map[string]cliCommand {
 			description: "displays previous location areas",
 			callback:    mapb,
 		},
+		"explore": {
+			name:        "explore",
+			description: "explore an area",
+			callback:    explore,
+		},
 	}
 }
 
@@ -61,7 +66,11 @@ func startRepl() {
 		if commands[text[0]].name == "" {
 			print("Unknown command")
 		} else {
-			commands[text[0]].callback(&con)
+			if len(text) > 1 {
+				commands[text[0]].callback(&con, text[1])
+			} else {
+				commands[text[0]].callback(&con)
+			}
 		}
 	}
 }
@@ -69,7 +78,7 @@ func startRepl() {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, ...string) error
 }
 
 type config struct {
