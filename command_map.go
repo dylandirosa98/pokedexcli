@@ -12,6 +12,13 @@ func mapCommand(fig *config) error {
 	if fig.nextURL != nil {
 		link = *fig.nextURL
 	}
+	val, ok := fig.cache.Get(link)
+	if ok {
+		print(val)
+		return nil
+	} else {
+		fig.cache.Add(link, val)
+	}
 	res, err := http.Get(link)
 	if err != nil {
 		return err
@@ -56,6 +63,13 @@ func mapb(fig *config) error {
 	link := "https://pokeapi.co/api/v2/location-area"
 	if fig.previousURL != nil {
 		link = *fig.previousURL
+	}
+	val, ok := fig.cache.Get(link)
+	if ok {
+		print(val)
+		return nil
+	} else {
+		fig.cache.Add(link, val)
 	}
 	res, err := http.Get(link)
 	if err != nil {

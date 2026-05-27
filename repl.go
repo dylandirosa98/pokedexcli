@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
+
+	"github.com/dylandirosa98/pokedexcli/internal"
 )
 
 func cleanInput(text string) []string {
@@ -41,9 +44,12 @@ func getCommands() map[string]cliCommand {
 func startRepl() {
 	scanner := bufio.NewScanner(os.Stdin)
 	commands := getCommands()
+	time := 5 * time.Second
+	cache := internal.NewCache(time)
 	con := config{
 		nextURL:     nil,
 		previousURL: nil,
+		cache:       &cache,
 	}
 	for {
 		fmt.Print("Pokedex > ")
@@ -69,4 +75,5 @@ type cliCommand struct {
 type config struct {
 	nextURL     *string
 	previousURL *string
+	cache       *internal.Cache
 }
