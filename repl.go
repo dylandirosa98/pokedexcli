@@ -43,6 +43,21 @@ func getCommands() map[string]cliCommand {
 			description: "explore an area",
 			callback:    explore,
 		},
+		"catch": {
+			name:        "catch",
+			description: "catch a pokemon",
+			callback:    catch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "see details about a pokemon",
+			callback:    inspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "view all of the pokemon you caught",
+			callback:    pokedex,
+		},
 	}
 }
 
@@ -55,6 +70,7 @@ func startRepl() {
 		nextURL:     nil,
 		previousURL: nil,
 		cache:       &cache,
+		Pokedex:     make(map[string]Pokemon),
 	}
 	for {
 		fmt.Print("Pokedex > ")
@@ -85,4 +101,5 @@ type config struct {
 	nextURL     *string
 	previousURL *string
 	cache       *internal.Cache
+	Pokedex     map[string]Pokemon
 }
